@@ -3,10 +3,23 @@ document.onreadystatechange = function () {
 };
 
 async function renderApp() {
-  let client = await app.initialized();
-  window['client'] = _client;
-  client.events.on('app.activated', renderSidebar);
-  return;
+  try {
+    let client = await app.initialized();
+    window['client'] = _client;
+    client.events.on('app.activated', renderSidebar);
+    return;
+  } catch (error) {
+    console.error(error);
+    await showNotification('danger', 'Unable to load the app');
+  }
+}
+
+async function showNotification(status, message) {
+  const details = {
+    type: `${status}`,
+    message: `${message}`
+  };
+  await client.interface.trigger('showNotify', details);
 }
 
 function renderSidebar() {
@@ -22,10 +35,10 @@ function renderSidebar() {
     const endpoint = `https://<%=iparam.freshdesk_subdomain%>.freshdesk.com/api/v2/tickets`;
     const options = {
       headers: {
-        'Authorization': ""
+        Authorization: ''
       }
-    }
-    await client.request.post(endpoint, options)
+    };
+    await client.request.post(endpoint, options);
   }
 
   console.log(subBox, descBox, emailBox, createTktBtn);
