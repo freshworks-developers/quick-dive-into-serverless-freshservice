@@ -1,28 +1,32 @@
-document.onreadystatechange = function() {
+document.onreadystatechange = function () {
   if (document.readyState === 'interactive') renderApp();
-
-  function renderApp() {
-    var onInit = app.initialized();
-
-    onInit
-      .then(function getClient(_client) {
-        window.client = _client;
-        client.events.on('app.activated', renderContactName);
-      })
-      .catch(handleErr);
-  }
 };
 
-function renderContactName() {
-  var textElement = document.getElementById('apptext');
-  client.data
-    .get('requester')
-    .then(function(payload) {
-      textElement.innerHTML = `Data Method returned: ${payload.requester.name}`;
-    })
-    .catch(handleErr);
+async function renderApp() {
+  let client = await app.initialized();
+  window['client'] = _client;
+  client.events.on('app.activated', renderSidebar);
+  return;
 }
 
-function handleErr(err = 'None') {
-  console.error(`Error occured. Details:`, err);
+function renderSidebar() {
+  const [subBox, descBox, emailBox] = [
+    document.querySelector('.subject'),
+    document.querySelector('.description'),
+    document.querySelector('.email')
+  ];
+  let createTktBtn = document.querySelector('.create-ticket');
+  createTktBtn.addEventListener('fwClick', createTicket);
+
+  async function createTicket() {
+    const endpoint = `https://<%=iparam.freshdesk_subdomain%>.freshdesk.com/api/v2/tickets`;
+    const options = {
+      headers: {
+        'Authorization': ""
+      }
+    }
+    await client.request.post(endpoint, options)
+  }
+
+  console.log(subBox, descBox, emailBox, createTktBtn);
 }

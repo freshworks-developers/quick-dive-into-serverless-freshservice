@@ -6,10 +6,13 @@
 
   <body>
     <section class="app-body">
-      <img src="./styles/images/rocket.svg" alt="A rocket emoji" />
-      <p>Congratulations on buliding your first app.</p>
-      <p id="apptext"></p>
+      <fw-input label="Ticket Subject" maxlength="50" class="subject"></fw-input>
+      <fw-textarea label="Ticket Description" cols="30" class="description"></fw-textarea>
+      <fw-input label="Email Address" icon-left="email" class="email"></fw-input>
+      <fw-button color="link" class="create-ticket">Create ticket</fw-button>
     </section>
   </body>
+  <script type="module" src="https://unpkg.com/@freshworks/crayons/dist/crayons/crayons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/@freshworks/crayons/dist/crayons/crayons.js"></script>
   <script src="scripts/app.js"></script>
 </html>
