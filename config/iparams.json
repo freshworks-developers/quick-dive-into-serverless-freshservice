@@ -1,15 +1,16 @@
 {
-  "freshservice_api_key": {
-    "display_name": "Freshservice API Key",
-    "description": "This requires an API key from get information from your Freshservice account",
+  "github_repo": {
+    "display_name": "Github Repo Name : ",
+    "description": "Enter the Github Repository name Ex: githubhandle/reponame",
     "type": "text",
     "required": true,
     "secure": true
   },
-  "subdomain": {
-    "display_name": "Subdomain",
-    "description": "[subdomain].freshservice.com",
+  "freshdesk_api_key": {
+    "display_name": "Freshdesk API key",
+    "description": "Enter the Freshdesk API key. It can be found in the profile settings.",
     "type": "text",
-    "required": true
+    "required": true,
+    "secure": true
   }
 }

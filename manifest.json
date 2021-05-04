@@ -1,5 +1,5 @@
 {
-  "platform-version": "2.1",
+  "platform-version": "2.0",
   "product": {
     "freshservice": {
       "location": {
@@ -7,11 +7,6 @@
           "url": "index.html",
           "icon": "styles/images/icon.svg"
         }
-      }
-    },
-    "events": {
-      "onLeadCreate": {
-        "handler": "onTicketCreate"
       }
     }
   }
