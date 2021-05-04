@@ -8,6 +8,11 @@
           "icon": "styles/images/icon.svg"
         }
       }
+    },
+    "events": {
+      "onLeadCreate": {
+        "handler": "onTicketCreate"
+      }
     }
   }
 }
