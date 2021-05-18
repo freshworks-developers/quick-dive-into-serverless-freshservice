@@ -1,3 +1,6 @@
 document.onreadystatechange = async function () {
-  if (document.readyState === 'interactive') { }
+  if (document.readyState === 'interactive') {
+
+    
+  }
 };
