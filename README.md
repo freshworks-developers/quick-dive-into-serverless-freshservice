@@ -1,6 +1,6 @@
-## Quick dive into Serverless (ft. Freshservice)
+## Octocat App (ft. Freshservice)
 
-This app creates a Github Issue everytime a Freshdesk ticket is created.
+This app creates a Github Issue everytime a Freshdesk ticket is created. Also, fetches information from a Issue into the app user interface.
 
 ### OAuth
 
