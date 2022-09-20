@@ -7,5 +7,6 @@
 **/node_modules/**
 **/test_data/**
 .idea
+**/log/**
 **/dist/**
 config/oauth_config.json
