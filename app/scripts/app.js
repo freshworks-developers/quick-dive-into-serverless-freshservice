@@ -39,11 +39,13 @@ async function createIssue() {
 
   console.log(ticketID, subject, description);
   try {
-    let dbKey = String(ticketID).substr(0, 30);
-
+    let dbKey = String(ticketID);
     let dbResponse = await client.db.get(dbKey);
+    console.log('dbResponse', dbResponse);
     await showNotification('warning', `An github issue is already created for ticket number ${dbResponse.ticketID}`);
-  } catch (error) {
+   } catch (error) {
+    console.log('error occurs when db key is not found - issue is not alreayd created so creating it. but error', error)
+
     if (error.status && error.message) {
       let { response } = await client.request.invokeTemplate("createIssuesOnGitHub",{
         body: JSON.stringify({
@@ -59,7 +61,6 @@ async function createIssue() {
         issueID,
         issueNumber
       };
-
       console.log('data', data);
       await Promise.all([client.db.set(String(issueID), { ...data }), client.db.set(String(ticketID), { ...data })]);
       await showNotification('success', 'Github Issue has been created successfully');
@@ -67,6 +68,25 @@ async function createIssue() {
       console.error('Here is what we know:', error);
     }
   }
+}
+
+function renderSidebar() {
+  const pick = document.querySelector.bind(document);
+
+  let createIssBtn = pick('.create-issue');
+  let viewIssBtn = pick('.issue-details');
+
+  createIssBtn.addEventListener('fwClick', createIssue);
+  viewIssBtn.addEventListener('fwClick', async function showDetails() {
+    try {
+      await client.interface.trigger('showModal', {
+        title: 'Github Issue Details',
+        template: './views/modal.html'
+      });
+    } catch (error) {
+      console.error('Saw following error:', error);
+    }
+  });
 }
 
 async function showNotification(status, message) {
