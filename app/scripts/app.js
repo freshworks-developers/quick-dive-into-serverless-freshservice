@@ -39,11 +39,11 @@ async function createIssue() {
 
   console.log(ticketID, subject, description);
   try {
-    let dbKey = String(ticketID).substr(0, 30);
-
+    let dbKey = String(ticketID);
     let dbResponse = await client.db.get(dbKey);
     await showNotification('warning', `An github issue is already created for ticket number ${dbResponse.ticketID}`);
   } catch (error) {
+    if (!error) return;
     if (error.status && error.message) {
       let { response } = await client.request.invokeTemplate("createIssuesOnGitHub",{
         body: JSON.stringify({
@@ -69,10 +69,8 @@ async function createIssue() {
 }
 
 function renderSidebar() {
-  const pick = document.querySelector.bind(document);
-
-  let createIssBtn = pick('.create-issue');
-  let viewIssBtn = pick('.issue-details');
+  let createIssBtn = document.querySelector('.create-issue');
+  let viewIssBtn = document.querySelector('.issue-details');
 
   createIssBtn.addEventListener('fwClick', createIssue);
   viewIssBtn.addEventListener('fwClick', async function showDetails() {
@@ -82,6 +80,7 @@ function renderSidebar() {
         template: './views/modal.html'
       });
     } catch (error) {
+      if (!error) return;
       console.error('Saw following error:', error);
     }
   });
