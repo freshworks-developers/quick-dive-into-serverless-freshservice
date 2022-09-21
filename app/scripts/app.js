@@ -39,13 +39,11 @@ async function createIssue() {
 
   console.log(ticketID, subject, description);
   try {
-    let dbKey = String(ticketID);
-    let dbResponse = await client.db.get(dbKey);
-    console.log('dbResponse', dbResponse);
-    await showNotification('warning', `An github issue is already created for ticket number ${dbResponse.ticketID}`);
-   } catch (error) {
-    console.log('error occurs when db key is not found - issue is not alreayd created so creating it. but error', error)
+    let dbKey = String(ticketID).substr(0, 30);
 
+    let dbResponse = await client.db.get(dbKey);
+    await showNotification('warning', `An github issue is already created for ticket number ${dbResponse.ticketID}`);
+  } catch (error) {
     if (error.status && error.message) {
       let { response } = await client.request.invokeTemplate("createIssuesOnGitHub",{
         body: JSON.stringify({

@@ -1,5 +1,7 @@
-(async function () {
-  let body = document.querySelector('.app-body');
+document.onreadystatechange = async function () {
+  if (document.readyState === 'interactive') {
+    var pick = document.querySelector.bind(document);
+    var body = pick('.app-body');
 
   try {
     let client = await app.initialized();
@@ -29,4 +31,5 @@
   } catch (error) {
     body.insertAdjacentHTML('afterbegin', '<p>No Github issue details associated to this ticket found</p>');
   }
-})();
+}
+}
