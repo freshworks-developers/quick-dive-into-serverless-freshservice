@@ -45,21 +45,12 @@ async function createIssue() {
     await showNotification('warning', `An github issue is already created for ticket number ${dbResponse.ticketID}`);
   } catch (error) {
     if (error.status && error.message) {
-      let { status, message } = error;
-      let options = {
-        headers: {
-          Authorization: 'token <%= access_token %>',
-          'user-agent': 'freshworks app'
-        },
+      let { response } = await client.request.invokeTemplate("createIssuesOnGitHub",{
         body: JSON.stringify({
           title: subject,
           body: description
-        }),
-        isOAuth: true
-      };
-      let issuesEnpoint = `https://api.github.com/repos/<%= iparam.github_repo %>/issues`;
-      let { response } = await client.request.post(issuesEnpoint, options);
-
+        })
+      })
       console.log('response', response);
 
       let { id: issueID, number: issueNumber } = JSON.parse(response);
