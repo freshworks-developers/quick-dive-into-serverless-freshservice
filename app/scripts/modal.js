@@ -5,15 +5,6 @@ document.onreadystatechange = async function () {
 
     try {
       let client = await app.initialized();
-
-      // let options = {
-      //   headers: {
-      //     Authorization: 'token <%= access_token %>',
-      //     'user-agent': 'freshworks app'
-      //   },
-      //   isOAuth: true
-      // };
-
       let {
         ticket: { id: ticketID }
       } = await client.data.get('ticket');
