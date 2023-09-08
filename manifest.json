@@ -1,5 +1,5 @@
 {
-  "platform-version": "2.2",
+  "platform-version": "2.3",
   "product": {
     "freshservice": {
       "location": {
@@ -10,11 +10,8 @@
       }
     }
   },
-  "whitelisted-domains": [
-    "https://api.github.com"
-  ],
   "engines": {
-    "node": "14.19.3",
-    "fdk": "8.6.1"
+    "node": "18.17.0",
+    "fdk": "9.0.4"
   }
 }
