@@ -9,13 +9,13 @@
         }
       },
       "requests": {
-        "getIssuesFromGitHub":{},
-        "createIssuesOnGitHub":{}
+        "getIssuesFromGitHub": {},
+        "createIssuesOnGitHub": {}
       }
     }
   },
   "engines": {
-    "node": "18.13.0",
-    "fdk": "9.0.0"
+    "node": "18.17.0",
+    "fdk": "9.0.4"
   }
 }
