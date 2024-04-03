@@ -6,14 +6,6 @@ document.onreadystatechange = async function () {
     try {
       let client = await app.initialized();
 
-      let options = {
-        headers: {
-          Authorization: 'token <%= access_token %>',
-          'user-agent': 'freshworks app'
-        },
-        isOAuth: true
-      };
-
       let {
         ticket: { id: ticketID }
       } = await client.data.get('ticket');
@@ -22,10 +14,10 @@ document.onreadystatechange = async function () {
 
       let { issueNumber } = await client.db.get(ticketID);
 
-      let issuesEnpoint = `https://api.github.com/repos/<%= iparam.github_repo %>/issues/${issueNumber}`;
+      let result = await client.request.invokeTemplate('getGithubIssue', { context: { issueNumber: issueNumber } });
+      let issueDetails = JSON.parse(result.response);
 
-      let { response: issueDetails } = await client.request.get(issuesEnpoint, options);
-      let { url, number, title, body: desc } = JSON.parse(issueDetails);
+      let { url, number, title, body: desc } = issueDetails;
 
       const modalContent = `
       <h2>${title}</h2>

@@ -19,7 +19,7 @@ async function createIssue() {
     ticket: { id: ticketID, subject, description }
   } = await client.data.get('ticket');
 
-  console.log(ticketID, subject, description)
+  console.log(ticketID, subject, description);
   try {
     let dbKey = String(ticketID).substr(0, 30);
 
@@ -28,23 +28,17 @@ async function createIssue() {
   } catch (error) {
     if (error.status && error.message) {
       let { status, message } = error;
-      let options = {
-        headers: {
-          Authorization: 'token <%= access_token %>',
-          'user-agent': 'freshworks app'
-        },
-        body: JSON.stringify({
-          title: subject,
-          body: description
-        }),
-        isOAuth: true
-      };
-      let issuesEnpoint = `https://api.github.com/repos/<%= iparam.github_repo %>/issues`;
-      let { response } = await client.request.post(issuesEnpoint, options);
+      let body = JSON.stringify({
+        title: subject,
+        body: description
+      });
 
-      console.log('response', response);
+      let result = await client.request.invokeTemplate('createGithubIssue', { body: body });
+      let responseJSON = JSON.parse(result.response);
 
-      let { id: issueID, number: issueNumber } = JSON.parse(response);
+      console.log('response', responseJSON);
+
+      let { id: issueID, number: issueNumber } = responseJSON;
       let data = {
         ticketID,
         issueID,

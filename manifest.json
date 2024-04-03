@@ -1,6 +1,12 @@
 {
   "platform-version": "3.0",
   "modules": {
+    "common": {
+      "requests": {
+        "createGithubIssue": {},
+        "getGithubIssue": {}
+      }
+    },
     "service_ticket": {
       "location": {
         "ticket_sidebar": {
